@@ -1,0 +1,29 @@
+# syntax=docker/dockerfile:1.7
+# =============================================================================
+# Frontend Vite (development) y build estático (production con Nginx)
+# =============================================================================
+
+FROM node:20-alpine AS base
+RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+WORKDIR /app
+
+FROM base AS deps
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile || pnpm install
+
+FROM base AS development
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+EXPOSE 5173
+CMD ["pnpm", "dev", "--host"]
+
+FROM base AS build
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN pnpm build
+
+FROM nginx:alpine AS production
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,7 @@
+# entities/
+
+Modelos de dominio (tipos + transformaciones + componentes atómicos
+como cards, badges, status pills).
+
+Convención: 1 carpeta por entidad. Ejemplos: tools/, machines/, materials/.
+NO importa de features/. Sí de shared/.

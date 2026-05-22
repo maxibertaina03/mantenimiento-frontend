@@ -1,0 +1,16 @@
+# features/
+
+Lógica de UI por dominio (composiciones de hooks + componentes + forms).
+Cada feature vive en su carpeta y NO exporta detalles internos.
+
+Ejemplo:
+  features/
+    tools/
+      ui/
+        loan-tool-dialog.tsx
+        return-tool-button.tsx
+      hooks/
+        use-loan-tool.ts
+      lib/
+        validation.ts
+      index.ts                # export público mínimo
