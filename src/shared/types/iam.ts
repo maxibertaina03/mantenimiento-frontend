@@ -7,7 +7,8 @@ export type UserStatus = 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
 
 export interface UserDto {
   id: string;
-  email: string;
+  username: string | null;
+  email: string | null;
   firstName: string | null;
   lastName: string | null;
   avatarUrl: string | null;

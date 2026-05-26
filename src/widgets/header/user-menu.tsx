@@ -40,7 +40,9 @@ export function UserMenu() {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col gap-0.5">
           <span className="truncate text-sm font-medium">{user?.fullName ?? '—'}</span>
-          <span className="truncate text-xs text-muted-foreground">{user?.email}</span>
+          <span className="truncate text-xs text-muted-foreground">
+            {user?.username ?? user?.email ?? '—'}
+          </span>
           {user?.role ? (
             <span className="mt-1 inline-flex w-fit rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium">
               {ROLE_LABELS[user.role]}

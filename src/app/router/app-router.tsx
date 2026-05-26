@@ -13,6 +13,10 @@ import { PlaceholderPage } from '@/pages/placeholder.page';
 import MachinesPage from '@/pages/machines/machines.page';
 import MachineDetailPage from '@/pages/machines/machine-detail.page';
 import MaintenancePage from '@/pages/maintenance/maintenance.page';
+import MaterialsPage from '@/pages/materials/materials.page';
+import ToolsPage from '@/pages/tools/tools.page';
+import ProvidersPage from '@/pages/providers/providers.page';
+import AuditPage from '@/pages/audit/audit.page';
 
 export function AppRouter() {
   return (
@@ -32,13 +36,13 @@ export function AppRouter() {
           <Route path="/machines" element={<MachinesPage />} />
           <Route path="/machines/:id" element={<MachineDetailPage />} />
           <Route path="/maintenance" element={<MaintenancePage />} />
-          <Route path="/tools" element={<PlaceholderPage title="Herramientas" />} />
-          <Route path="/materials" element={<PlaceholderPage title="Materiales" />} />
-          <Route path="/providers" element={<PlaceholderPage title="Proveedores" />} />
+          <Route path="/tools" element={<ToolsPage />} />
+          <Route path="/materials" element={<MaterialsPage />} />
+          <Route path="/providers" element={<ProvidersPage />} />
 
           <Route element={<RequireRole roles={['ADMIN', 'SUPERVISOR']} />}>
             <Route path="/users" element={<PlaceholderPage title="Usuarios" />} />
-            <Route path="/audit" element={<PlaceholderPage title="Auditoría" />} />
+            <Route path="/audit" element={<AuditPage />} />
           </Route>
         </Route>
       </Route>
