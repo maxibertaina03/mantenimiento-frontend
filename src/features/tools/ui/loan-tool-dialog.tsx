@@ -25,11 +25,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/shared/ui/form';
-import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
+import { UserSelector } from '@/shared/ui/user-selector';
 
 const schema = z.object({
-  responsibleId: z.string().uuid('Debe ser un UUID válido'),
+  responsibleId: z.string().min(1, 'Selecciona un responsable'),
   expectedAt: z.string().optional(),
   notes: z.string().optional(),
 });
@@ -84,14 +84,15 @@ export function LoanToolDialog({ open, onOpenChange, tool }: Props) {
               name="responsibleId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Responsable (UUID)</FormLabel>
+                  <FormLabel>Responsable</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="00000000-0000-0000-0000-000000000000" />
+                    <UserSelector
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      placeholder="Seleccionar responsable"
+                      roles={['TECHNICIAN', 'OPERATOR']}
+                    />
                   </FormControl>
-                  <FormDescription>
-                    Próximamente se reemplaza por un selector tras implementar el módulo de
-                    usuarios.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

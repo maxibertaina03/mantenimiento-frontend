@@ -27,6 +27,7 @@ import {
 } from '@/shared/ui/form';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
+import { UserSelector } from '@/shared/ui/user-selector';
 import {
   Select,
   SelectContent,
@@ -42,6 +43,7 @@ const schema = z
     location: z.enum(['INTERNAL', 'EXTERNAL']),
     externalLocation: z.string().optional(),
     scheduledFor: z.string().optional(),
+    technicianId: z.string().optional(),
     description: z.string().optional(),
   })
   .refine(
@@ -68,6 +70,7 @@ export function ScheduleMaintenanceDialog({ open, onOpenChange, defaultMachineId
       location: 'INTERNAL',
       externalLocation: '',
       scheduledFor: '',
+      technicianId: '',
       description: '',
     },
   });
@@ -84,6 +87,7 @@ export function ScheduleMaintenanceDialog({ open, onOpenChange, defaultMachineId
         location: values.location,
         externalLocation: values.externalLocation || null,
         scheduledFor: values.scheduledFor ? new Date(values.scheduledFor).toISOString() : null,
+        technicianId: values.technicianId || null,
         description: values.description || null,
       }),
     successMessage: 'Mantenimiento programado',
@@ -204,6 +208,25 @@ export function ScheduleMaintenanceDialog({ open, onOpenChange, defaultMachineId
                   <FormLabel>Fecha programada</FormLabel>
                   <FormControl>
                     <Input type="datetime-local" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="technicianId"
+              render={({ field }) => (
+                <FormItem className="sm:col-span-2">
+                  <FormLabel>Técnico (opcional)</FormLabel>
+                  <FormControl>
+                    <UserSelector
+                      value={field.value || ''}
+                      onValueChange={field.onChange}
+                      placeholder="Seleccionar técnico"
+                      roles={['TECHNICIAN']}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
