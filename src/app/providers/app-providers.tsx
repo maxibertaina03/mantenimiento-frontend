@@ -1,16 +1,18 @@
 import { ClerkProvider } from '@clerk/clerk-react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RouterProvider } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Toaster } from 'sonner';
-import { BrowserRouter } from 'react-router-dom';
 
 import { env } from '@/shared/config/env';
 import { queryClient } from '@/shared/lib/query-client';
+import { router } from '@/app/router/router';
 import { TooltipProvider } from '@/shared/ui/tooltip';
 import { ClerkAuthBridge } from './clerk-auth-bridge';
 import { ThemeProvider } from './theme-provider';
 
-export function AppProviders({ children }: { children: React.ReactNode }) {
+export function AppProviders() {
   return (
     <ClerkProvider
       publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
@@ -23,13 +25,15 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
             <TooltipProvider delayDuration={150}>
-              <BrowserRouter>{children}</BrowserRouter>
-              <Toaster position="top-right" richColors closeButton />
+              <RouterProvider router={router}>
+                <Toaster position="top-right" richColors closeButton />
+                {env.VITE_APP_ENV !== 'production' ? <TanStackRouterDevtools /> : null}
+              </RouterProvider>
+              {env.VITE_APP_ENV !== 'production' ? (
+                <ReactQueryDevtools initialIsOpen={false} />
+              ) : null}
             </TooltipProvider>
           </ThemeProvider>
-          {env.VITE_APP_ENV !== 'production' ? (
-            <ReactQueryDevtools initialIsOpen={false} />
-          ) : null}
         </QueryClientProvider>
       </ClerkAuthBridge>
     </ClerkProvider>

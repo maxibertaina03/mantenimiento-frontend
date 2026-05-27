@@ -1,10 +1,9 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
+import { Outlet } from '@tanstack/react-router';
 import { Skeleton } from '@/shared/ui/skeleton';
 
 export function RequireAuth() {
   const { isLoaded, isSignedIn } = useAuth();
-  const location = useLocation();
 
   if (!isLoaded) {
     return (
@@ -15,7 +14,8 @@ export function RequireAuth() {
   }
 
   if (!isSignedIn) {
-    return <Navigate to="/sign-in" replace state={{ from: location.pathname }} />;
+    window.location.href = '/sign-in';
+    return null;
   }
 
   return <Outlet />;
