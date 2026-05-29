@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { Plus, Play, CheckCircle2, MoreHorizontal } from 'lucide-react';
+import { Plus, Play, CheckCircle2, XCircle, MoreHorizontal } from 'lucide-react';
 import { useNavigate } from '@tanstack/react-router';
 
 import { Button } from '@/shared/ui/button';
@@ -64,6 +64,12 @@ export default function MaintenancePage() {
     invalidateKeys: [maintenanceKeys.all, machineKeys.all],
   });
 
+  const cancelMutation = useMutationWithFeedback({
+    mutationFn: (id: string) => maintenanceApi.cancel(id),
+    successMessage: 'Mantenimiento cancelado',
+    invalidateKeys: [maintenanceKeys.all, machineKeys.all],
+  });
+
   const columns = useMemo<ColumnDef<MaintenanceDto>[]>(
     () => [
       {
@@ -117,6 +123,7 @@ export default function MaintenancePage() {
           const o = row.original;
           const canStart = o.status === 'SCHEDULED';
           const canComplete = o.status === 'SCHEDULED' || o.status === 'IN_PROGRESS';
+          const canCancel = o.status !== 'COMPLETED' && o.status !== 'CANCELLED';
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -135,13 +142,21 @@ export default function MaintenancePage() {
                     <CheckCircle2 className="mr-2 h-4 w-4" /> Completar
                   </DropdownMenuItem>
                 )}
+                {canCancel && (
+                  <DropdownMenuItem
+                    className="text-destructive focus:text-destructive"
+                    onSelect={() => cancelMutation.mutate(o.id)}
+                  >
+                    <XCircle className="mr-2 h-4 w-4" /> Cancelar
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [machineMap, navigate, startMutation],
+    [machineMap, navigate, startMutation, cancelMutation],
   );
 
   return (

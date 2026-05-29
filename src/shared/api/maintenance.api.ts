@@ -48,4 +48,6 @@ export const maintenanceApi = {
   start: (id: string) => patchData<MaintenanceDto>(`/maintenance-orders/${id}/start`),
   complete: (id: string, body: CompleteMaintenanceBody) =>
     patchData<MaintenanceDto, CompleteMaintenanceBody>(`/maintenance-orders/${id}/complete`, body),
+  cancel: (id: string, reason?: string) =>
+    patchData<MaintenanceDto, { reason?: string }>(`/maintenance-orders/${id}/cancel`, { reason }),
 };
