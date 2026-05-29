@@ -4,7 +4,7 @@ import type { ApiError } from '@/shared/types/api';
 
 interface FeedbackOptions<T, V> extends UseMutationOptions<T, ApiError, V> {
   successMessage?: string;
-  invalidateKeys?: readonly unknown[][];
+  invalidateKeys?: ReadonlyArray<readonly unknown[]>;
 }
 
 /**
@@ -21,10 +21,20 @@ export function useMutationWithFeedback<T, V>(opts: FeedbackOptions<T, V>) {
     ...rest,
     onSuccess: async (data, variables, context) => {
       if (invalidateKeys) {
-        await Promise.all(invalidateKeys.map((key) => qc.invalidateQueries({ queryKey: key })));
+        await Promise.all(
+          invalidateKeys.map((key) =>
+            qc.invalidateQueries({ queryKey: key as unknown as unknown[] }),
+          ),
+        );
       }
       if (successMessage) toast.success(successMessage);
-      await onSuccess?.(data, variables, context);
+      if (onSuccess) {
+        await (onSuccess as (data: T, variables: V, context: unknown) => Promise<void> | void)(
+          data,
+          variables,
+          context,
+        );
+      }
     },
   });
 }

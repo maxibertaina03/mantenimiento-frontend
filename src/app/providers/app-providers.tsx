@@ -13,11 +13,6 @@ import { ClerkAuthBridge } from './clerk-auth-bridge';
 import { ThemeProvider } from './theme-provider';
 
 export function AppProviders() {
-  console.log('[AppProviders] Clerk config:', {
-    publishableKey: env.VITE_CLERK_PUBLISHABLE_KEY?.substring(0, 20) + '...',
-    signInUrl: env.VITE_CLERK_SIGN_IN_URL,
-  });
-
   return (
     <ClerkProvider
       publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
@@ -30,10 +25,9 @@ export function AppProviders() {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
             <TooltipProvider delayDuration={150}>
-              <RouterProvider router={router}>
-                <Toaster position="top-right" richColors closeButton />
-                {env.VITE_APP_ENV !== 'production' ? <TanStackRouterDevtools /> : null}
-              </RouterProvider>
+              <RouterProvider router={router} />
+              <Toaster position="top-right" richColors closeButton />
+              {env.VITE_APP_ENV !== 'production' ? <TanStackRouterDevtools router={router} /> : null}
               {env.VITE_APP_ENV !== 'production' ? (
                 <ReactQueryDevtools initialIsOpen={false} />
               ) : null}

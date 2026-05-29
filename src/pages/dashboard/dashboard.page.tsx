@@ -51,7 +51,7 @@ export default function DashboardPage() {
           value={stats?.machines.operational}
           total={stats?.machines.total}
           loading={statsLoading}
-          onClick={() => navigate('/machines')}
+          onClick={() => navigate({ to: '/machines' })}
         />
         <KpiCard
           title="Mantenimientos pendientes"
@@ -59,7 +59,7 @@ export default function DashboardPage() {
           value={stats?.maintenance.pending}
           loading={statsLoading}
           tone={stats && stats.maintenance.pending > 0 ? 'warning' : 'default'}
-          onClick={() => navigate('/maintenance')}
+          onClick={() => navigate({ to: '/maintenance' })}
         />
         <KpiCard
           title="Herramientas prestadas"
@@ -67,7 +67,7 @@ export default function DashboardPage() {
           value={stats?.tools.onLoan}
           total={stats?.tools.total}
           loading={statsLoading}
-          onClick={() => navigate('/tools')}
+          onClick={() => navigate({ to: '/tools' })}
         />
         <KpiCard
           title="Materiales con stock bajo"
@@ -75,7 +75,7 @@ export default function DashboardPage() {
           value={stats?.materials.lowStock}
           loading={statsLoading}
           tone={stats && stats.materials.lowStock > 0 ? 'destructive' : 'default'}
-          onClick={() => navigate('/materials')}
+          onClick={() => navigate({ to: '/materials' })}
         />
       </div>
 
@@ -147,7 +147,7 @@ export default function DashboardPage() {
               variant="ghost"
               size="sm"
               className="ml-auto mt-2 flex"
-              onClick={() => navigate('/maintenance')}
+              onClick={() => navigate({ to: '/maintenance' })}
             >
               Ver todos <ArrowRight className="ml-1 h-3 w-3" />
             </Button>

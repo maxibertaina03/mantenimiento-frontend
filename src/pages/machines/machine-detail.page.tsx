@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { useParams } from '@tanstack/react-router';
+import { useNavigate, useParams } from '@tanstack/react-router';
 import { ArrowLeft, Clock, Pencil } from 'lucide-react';
 
 import { Button } from '@/shared/ui/button';
@@ -18,7 +17,7 @@ import { MaintenanceHistoryTable } from '@/features/maintenance/ui/maintenance-h
 import { formatDate } from '@/shared/lib/utils';
 
 export default function MachineDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams({ strict: false }) as { id: string };
   const navigate = useNavigate();
   const { data: machine, isLoading } = useMachine(id);
   const { data: usageLogs } = useUsageLogs(id);
@@ -31,7 +30,7 @@ export default function MachineDetailPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm" onClick={() => navigate('/machines')}>
+        <Button variant="ghost" size="sm" onClick={() => navigate({ to: '/machines' })}>
           <ArrowLeft className="mr-2 h-4 w-4" /> Volver
         </Button>
         <div className="flex-1" />

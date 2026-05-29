@@ -62,7 +62,7 @@ export default function MachinesPage() {
         cell: ({ row }) => (
           <button
             className="text-left font-medium hover:underline"
-            onClick={() => navigate(`/machines/${row.original.id}`)}
+            onClick={() => navigate({ to: '/machines/$id', params: { id: row.original.id } })}
           >
             {row.original.name}
           </button>
@@ -166,7 +166,7 @@ export default function MachinesPage() {
                 <li key={a.machine.id} className="flex items-center justify-between">
                   <button
                     className="text-left hover:underline"
-                    onClick={() => navigate(`/machines/${a.machine.id}`)}
+                    onClick={() => navigate({ to: '/machines/$id', params: { id: a.machine.id } })}
                   >
                     {a.machine.code} · {a.machine.name}
                   </button>

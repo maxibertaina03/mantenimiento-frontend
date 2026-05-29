@@ -1,11 +1,17 @@
 import { useAuth } from '@clerk/clerk-react';
-import { Outlet } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from '@tanstack/react-router';
 import { Skeleton } from '@/shared/ui/skeleton';
 
 export function RequireAuth() {
   const { isLoaded, isSignedIn } = useAuth();
+  const navigate = useNavigate();
 
-  console.log('[RequireAuth] Auth state:', { isLoaded, isSignedIn });
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      navigate({ to: '/sign-in' });
+    }
+  }, [isLoaded, isSignedIn, navigate]);
 
   if (!isLoaded) {
     return (
@@ -17,8 +23,6 @@ export function RequireAuth() {
   }
 
   if (!isSignedIn) {
-    console.log('[RequireAuth] No autorizado, redirigiendo a sign-in');
-    window.location.href = '/sign-in';
     return null;
   }
 

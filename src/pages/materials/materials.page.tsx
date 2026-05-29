@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 import { Button } from '@/shared/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Card, CardHeader, CardTitle } from '@/shared/ui/card';
 import { Input } from '@/shared/ui/input';
 import { DataTable } from '@/shared/ui/data-table';
 import { Skeleton } from '@/shared/ui/skeleton';

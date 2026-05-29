@@ -39,15 +39,13 @@ export interface CompleteMaintenanceBody {
 
 export const maintenanceApi = {
   list: (params: MaintenanceListParams = {}) =>
-    getData<Paginated<MaintenanceDto>>('/maintenance', params as Record<string, unknown>),
-  get: (id: string) => getData<MaintenanceDto>(`/maintenance/${id}`),
+    getData<Paginated<MaintenanceDto>>('/maintenance-orders', params as Record<string, unknown>),
+  get: (id: string) => getData<MaintenanceDto>(`/maintenance-orders/${id}`),
   schedule: (body: ScheduleMaintenanceBody) =>
-    postData<MaintenanceDto, ScheduleMaintenanceBody>('/maintenance', body),
+    postData<MaintenanceDto, ScheduleMaintenanceBody>('/maintenance-orders', body),
   update: (id: string, body: Partial<ScheduleMaintenanceBody> & { observations?: string | null }) =>
-    patchData<MaintenanceDto, typeof body>(`/maintenance/${id}`, body),
-  start: (id: string) => postData<MaintenanceDto>(`/maintenance/${id}/start`),
+    patchData<MaintenanceDto, typeof body>(`/maintenance-orders/${id}`, body),
+  start: (id: string) => patchData<MaintenanceDto>(`/maintenance-orders/${id}/start`),
   complete: (id: string, body: CompleteMaintenanceBody) =>
-    postData<MaintenanceDto, CompleteMaintenanceBody>(`/maintenance/${id}/complete`, body),
-  cancel: (id: string, reason?: string) =>
-    postData<MaintenanceDto, { reason?: string }>(`/maintenance/${id}/cancel`, { reason }),
+    patchData<MaintenanceDto, CompleteMaintenanceBody>(`/maintenance-orders/${id}/complete`, body),
 };

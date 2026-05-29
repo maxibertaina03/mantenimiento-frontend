@@ -41,16 +41,29 @@ const authLayoutRoute = createRoute({
   notFoundComponent: NotFoundPage,
 });
 
-// Auth routes
+// Auth routes - usamos splat para que Clerk maneje sus sub-rutas internas
+// (sign-in/factor-one, sign-in/verify-email, etc.)
 const signInRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   path: 'sign-in',
   component: SignInPage,
 });
 
+const signInSplatRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: 'sign-in/$',
+  component: SignInPage,
+});
+
 const signUpRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   path: 'sign-up',
+  component: SignUpPage,
+});
+
+const signUpSplatRoute = createRoute({
+  getParentRoute: () => authLayoutRoute,
+  path: 'sign-up/$',
   component: SignUpPage,
 });
 
@@ -139,7 +152,7 @@ const auditRoute = createRoute({
 
 // Route tree
 const routeTree = rootRoute.addChildren([
-  authLayoutRoute.addChildren([signInRoute, signUpRoute]),
+  authLayoutRoute.addChildren([signInRoute, signInSplatRoute, signUpRoute, signUpSplatRoute]),
   protectedLayoutRoute.addChildren([
     dashboardLayoutRoute.addChildren([
       rootIndexRoute,

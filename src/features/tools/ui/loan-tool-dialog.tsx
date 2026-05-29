@@ -19,12 +19,12 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/shared/ui/form';
+import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 import { UserSelector } from '@/shared/ui/user-selector';
 

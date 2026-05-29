@@ -6,7 +6,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: (count, error) => {
-        const status = (error as ApiError).statusCode;
+        const status = (error as unknown as ApiError).statusCode;
         if (status >= 400 && status < 500) return false;
         return count < 2;
       },
@@ -15,7 +15,7 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       onError: (error) => {
-        const apiError = error as ApiError;
+        const apiError = error as unknown as ApiError;
         toast.error(apiError.message ?? 'Algo salió mal', {
           description: apiError.code,
         });
