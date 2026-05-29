@@ -13,6 +13,11 @@ import { ClerkAuthBridge } from './clerk-auth-bridge';
 import { ThemeProvider } from './theme-provider';
 
 export function AppProviders() {
+  console.log('[AppProviders] Clerk config:', {
+    publishableKey: env.VITE_CLERK_PUBLISHABLE_KEY?.substring(0, 20) + '...',
+    signInUrl: env.VITE_CLERK_SIGN_IN_URL,
+  });
+
   return (
     <ClerkProvider
       publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}

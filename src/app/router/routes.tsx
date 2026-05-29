@@ -38,6 +38,7 @@ const authLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
   id: 'auth-layout',
   component: AuthLayout,
+  notFoundComponent: NotFoundPage,
 });
 
 // Auth routes
@@ -65,6 +66,7 @@ const dashboardLayoutRoute = createRoute({
   getParentRoute: () => protectedLayoutRoute,
   id: 'dashboard-layout',
   component: DashboardLayout,
+  notFoundComponent: NotFoundPage,
 });
 
 // Dashboard routes
