@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRootRoute, createRoute } from '@tanstack/react-router';
+import { createRootRoute, createRoute, useNavigate } from '@tanstack/react-router';
 import RootLayout from '@/layouts/root-layout';
 import { AuthLayout } from '@/layouts/auth-layout';
 import { DashboardLayout } from '@/layouts/dashboard-layout';
@@ -20,7 +20,7 @@ import ProvidersPage from '@/pages/providers/providers.page';
 import AuditPage from '@/pages/audit/audit.page';
 
 const RootIndex = () => {
-  const navigate = require('@tanstack/react-router').useNavigate();
+  const navigate = useNavigate();
   React.useEffect(() => {
     navigate({ to: '/dashboard' });
   }, [navigate]);
@@ -31,6 +31,20 @@ const RootIndex = () => {
 const rootRoute = createRootRoute({
   component: RootLayout,
   notFoundComponent: NotFoundPage,
+  errorComponent: ({ error }) => (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center">
+      <h1 className="text-2xl font-semibold">Error en la aplicación</h1>
+      <p className="max-w-md text-sm text-muted-foreground">
+        {error instanceof Error ? error.message : 'Error inesperado'}
+      </p>
+      <button
+        className="rounded bg-primary px-4 py-2 text-primary-foreground"
+        onClick={() => window.location.assign('/dashboard')}
+      >
+        Volver al inicio
+      </button>
+    </div>
+  ),
 });
 
 // Auth layout
