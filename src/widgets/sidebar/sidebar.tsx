@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from '@tanstack/react-router';
 import { cn } from '@/shared/lib/utils';
 import { navigation } from '@/shared/config/navigation';
 import { useCurrentUser } from '@/shared/hooks/use-current-user';
@@ -6,6 +6,7 @@ import { Separator } from '@/shared/ui/separator';
 
 export function Sidebar() {
   const { data: user } = useCurrentUser();
+  const location = useLocation();
 
   return (
     <aside className="flex h-screen w-64 shrink-0 flex-col border-r bg-card">
@@ -25,24 +26,25 @@ export function Sidebar() {
                 {group.label}
               </p>
               <ul className="space-y-1">
-                {visible.map((item) => (
-                  <li key={item.to}>
-                    <NavLink
-                      to={item.to}
-                      className={({ isActive }) =>
-                        cn(
+                {visible.map((item) => {
+                  const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
+                  return (
+                    <li key={item.to}>
+                      <Link
+                        to={item.to}
+                        className={cn(
                           'flex items-center gap-2 rounded-md px-2 py-2 text-sm transition-colors',
                           isActive
                             ? 'bg-accent text-accent-foreground'
                             : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
-                        )
-                      }
-                    >
-                      <item.icon className="h-4 w-4" />
-                      {item.label}
-                    </NavLink>
-                  </li>
-                ))}
+                        )}
+                      >
+                        <item.icon className="h-4 w-4" />
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
               <Separator className="mt-3" />
             </div>

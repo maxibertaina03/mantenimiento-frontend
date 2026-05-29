@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { getData } from './http';
 
 export interface UserListItem {
   id: string;
@@ -19,5 +19,5 @@ export interface ListUsersResponse {
 
 export const usersApi = {
   list: (skip?: number, take?: number): Promise<ListUsersResponse> =>
-    apiClient.get('/v1/iam/users', { params: { skip, take } }),
+    getData<ListUsersResponse>('/v1/iam/users', { skip, take }),
 };

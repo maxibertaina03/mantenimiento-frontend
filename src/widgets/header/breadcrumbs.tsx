@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from '@tanstack/react-router';
 import { ChevronRight } from 'lucide-react';
 
 const LABELS: Record<string, string> = {
@@ -13,8 +13,8 @@ const LABELS: Record<string, string> = {
 };
 
 export function Breadcrumbs() {
-  const { pathname } = useLocation();
-  const segments = pathname.split('/').filter(Boolean);
+  const location = useLocation();
+  const segments = location.pathname.split('/').filter(Boolean);
 
   if (segments.length === 0) return null;
 

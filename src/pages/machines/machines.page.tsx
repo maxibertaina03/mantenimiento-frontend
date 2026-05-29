@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Plus, Search, AlertTriangle, MoreHorizontal, Clock, Pencil, Trash2 } from 'lucide-react';
 

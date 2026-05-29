@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 import { ArrowLeft, Clock, Pencil } from 'lucide-react';
 
 import { Button } from '@/shared/ui/button';
