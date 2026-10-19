@@ -1,4 +1,4 @@
-# Mantenimiento2 · Web (React + Vite)
+# Mantenimiento v1 · Web (React + Vite)
 
 > **Este repo quedó reemplazado.** Es la primera versión del sistema de mantenimiento (mayo 2026) y ya no se usa.
 > La versión actual, en producción, está en [mantenimiento2-frontend](https://github.com/maxibertaina03/mantenimiento2-frontend).
